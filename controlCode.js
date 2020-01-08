@@ -10,7 +10,7 @@ function writeCss(prefix, code, fn){
         window.clearInterval(id)
         fn && fn.call()
       }
-    }, 30)
+    }, 0)
   }
   function writeMarkdown(markdown, fn){
     let domPaper = document.querySelector('#paper>.content')
@@ -23,32 +23,38 @@ function writeCss(prefix, code, fn){
         window.clearInterval(id)
         fn && fn.call()
       }
-    }, 50)
+    }, 100)
   }
   
   var css1 = `
   /* 大家好，在介绍自己之前我想要将
   简历的样式布置一下
-  */
-  body{
+  */   
+*{
+    transition: all 1s;
+  }
+  html{
   background-color:#eee;
   }
+  #code-wrapper{
+    width: 40%; left: 0; position: fixed; 
+    height: 100%;
+  }
+  /*加个边距和一些会动的动画*/
   #code{
-     padding:20px;
-     position:fixed;
-     width:50%;
-     height:100%;
-     background-color:#00b294;
-     box-shadow: -4px 2px 18px -2px rgba(0,0,0,0.75);
-     transition: transform 1s linear;
+     background-color:white;
      transform-origin: top left;
      transform-style: preserve-3D;
      transform: rotate(360deg);
+     border: 1px solid #aaa;
+     padding: 16px;
   
   }
-  
-  
   /*我需要一点代码高亮*/
+  
+  .token.comment{
+    color:eee
+}
   .token.selector{
       color:#690
   }
@@ -61,37 +67,13 @@ function writeCss(prefix, code, fn){
   .token.function{
       color:#DD4A68
   }
-  #code-wrapper{
-      width: 50%; left: 0; position: fixed; 
-      height: 100%;
-    }
-#paper>.content{}
-      #code{
-      animation: breath 0.5s infinite alternate-reverse;
+/*添加呼吸效果*/
+    #code{
+    animation: breath 0.5s infinite alternate-reverse;
      }
-    
-
-       
-*{
-    transition: all 1s;
-  }
-  html{
-    background: #eee;
-  }
-  #code{
-    border: 1px solid #aaa;
-    padding: 16px;
-  }
-
-  #code-wrapper{
-    width: 50%; left: 0; position: fixed; 
-    height: 100%;
-  }
- 
-  /* 于是我就可以在白纸上写字了，请看右边 */
-  
   /* 不玩了，我来介绍自己把,现在开始我要准备一张白纸
   */
+ /* 于是我就可以在白纸上写字了，请看右边 */
   `
   
   var css2 = `
@@ -100,28 +82,34 @@ function writeCss(prefix, code, fn){
    */
   `
   var md = `
+  # 本人照片，有点俗，但还能看
+  ![](./pic/photo.JPG)
   # 自我介绍
       我叫罗明慧
   # 我的座右铭
-      所有你想要的都别随风而去
+      趁着年轻，所有你想要的都别随风而去，愿不负韶华
   # 我的爱好
-      敲代码
+      敲代码,打桌球，看书，听音乐
   # 我的技能
       熟练使用js，jquery,http,git,boostrap等框架的使用，并且能使用mvc的框架思想
   # 我的作品
-      画板，会动的简历，web简历，导航栏，轮播图等
-  **我会加油的，望能给我到贵公司面试的机会**
+      画板，web简历，导航栏，轮播图，会动的比卡丘等
+ 
+   **我会加油的，望能给我到贵公司面试的机会**
   `
   var css3=`
-  这是我的会动简历，谢谢观看
+  /*这是我的会动简历，谢谢观看*/
   `
   
   writeCss('', css1, ()=>{ // writeCss call the function
     createPaper(() => {
+       
       writeMarkdown(md, ()=> {
+       
         writeCss(css1, css2, ()=>{
+           
           convertMarkdownToHtml(()=>{
-            writeCss(css1 + css2, css3, ()=> {  
+            writeCss(css1+css2, css3, ()=> {  
               console.log('完成')
             })
           })
